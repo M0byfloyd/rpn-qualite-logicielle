@@ -1,14 +1,18 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
+  <RNPbody />
 </template>
 
-<script>
-import {calculator} from '../index.ts';
-import {onMounted} from "vue";
+<script lang="ts">
+import { defineComponent } from 'vue';
+import RNPbody from './components/RNPbody.vue';
 
-onMounted(() => {
-  calculator.test();
-})
+export default defineComponent({
+  name: 'App',
+  components: {
+    RNPbody
+  }
+});
 </script>
 
 <style>
