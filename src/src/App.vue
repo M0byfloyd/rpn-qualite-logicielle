@@ -1,17 +1,17 @@
 <template>
-<!--  <img alt="Vue logo" src="./assets/logo.png">-->
+  <!--  <img alt="Vue logo" src="./assets/logo.png">-->
   <RNPbody />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import RNPbody from './components/RNPbody.vue';
+import { defineComponent } from "vue";
+import RNPbody from "./components/RNPbody.vue";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
-    RNPbody
-  }
+    RNPbody,
+  },
 });
 </script>
 
@@ -23,5 +23,7 @@ export default defineComponent({
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  display: flex;
+  justify-content: center;
 }
 </style>
