@@ -1,2 +1,4 @@
 /node_modules
 /coverage
+/.idea
+/src/package-lock.json

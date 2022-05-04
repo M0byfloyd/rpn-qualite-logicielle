@@ -1,17 +1,16 @@
 <template>
   <div class="rnp-body">
     <div class="rnp-body__numbers">
-      <RNPbutton @input="input" v-for="(element,index) in elements.numbers" :key="index" :value="element"/>
+      <RNPbutton class="" @input="input" v-for="(element,index) in elements.numbers" :key="index" :value="element"/>
     </div>
 
     <div class="rnp-body__operator">
-      <RNPbutton @input="input" v-for="(element,index) in elements.operators" :key="index" :value="element"/>
+      <RNPbutton @input="input" look="operators" v-for="(element,index) in elements.operators" :key="index" :value="element"/>
     </div>
 
     <div>
-      <RNPbutton @input="input" :value="'clear'" />
-
-      <RNPbutton @input="input" />
+      <RNPbutton @input="input" look="clear" :value="'C'" />
+      <RNPbutton @input="input" look="sumary" />
     </div>
 
     <RNPoutput :output="output" />
@@ -36,9 +35,9 @@ export default defineComponent({
     return {
       elements: {
         numbers: [
-          1, 2, 3, 4,
-          5, 6, 7, 8,
-          9, 0
+          9, 8, 7, 6,
+          5, 4, 3, 2,
+          1, 0
         ],
         operators: ['+', '-', '*', '/'],
       },
@@ -48,7 +47,7 @@ export default defineComponent({
   },
   methods: {
     input(e: string|number) {
-      if (e === 'clear') {
+      if (e === 'C') {
         this.clear();
       }
 
