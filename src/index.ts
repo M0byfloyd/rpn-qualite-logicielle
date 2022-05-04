@@ -4,8 +4,19 @@ export function test() {
     console.log('oeriezrpoi')
 }
 export function calculateRNP(expression:[]) {
+    let cal = [];
     expression.forEach(function (value) {
+        if(typeof value === 'number'){
+            cal.push(value);
+        }
+        if else (typeof value === 'string'){
+            if (cal.length === 2){
+                caculateConvertedExpression(cal[0],cal[1],value);
+            }
+            else {
 
+            }
+        }
     });
 }
 
