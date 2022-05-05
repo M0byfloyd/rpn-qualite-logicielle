@@ -39,7 +39,7 @@ describe('Test calculateRNP() 2eme',()=> {
     const actual = calculateRNP(expression);
 
     //THEN
-    const expected = -3;
+    const expected = 12;
     expect(actual).toEqual(expected)
   });
 });
