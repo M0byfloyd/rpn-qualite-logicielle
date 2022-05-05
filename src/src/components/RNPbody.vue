@@ -1,49 +1,53 @@
 <template>
   <div class="rnp-body">
     <div class="results-container">
-      <RNPoutput :output="output" class="result" />
-
       <div class="calcul">
-        {{ dataForCalculate }}
+        <p v-if="dataForCalculate.length">
+          <span v-for="(data,index) in dataForCalculate" :key="index">
+            {{ data }}
+          </span>
+        </p>
       </div>
+
+      <RNPoutput :output="output" class="result"/>
     </div>
 
     <div class="result-reset-btn">
-      <RNPbutton @input="input" look="clear" :value="'C'" />
-      <RNPbutton @input="input" look="sumary" />
+      <RNPbutton @input="input" look="clear" :value="'C'"/>
+      <RNPbutton @input="input" look="sumary"/>
     </div>
 
     <div class="rnp-body__numbers">
-      <RNPbutton class="" @input="input" v-for="(element, index) in elements.numbers" :key="index" :value="element" />
+      <RNPbutton class="" @input="input" v-for="(element, index) in elements.numbers" :key="index" :value="element"/>
     </div>
 
     <div class="rnp-body__operator">
       <RNPbutton
-        @input="input"
-        look="operators"
-        v-for="(element, index) in elements.operators"
-        :key="index"
-        :value="element"
+          @input="input"
+          look="operators"
+          v-for="(element, index) in elements.operators"
+          :key="index"
+          :value="element"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 import RNPbutton from "@/components/RNPbutton.vue";
 import RNPoutput from "@/components/RNPoutput.vue";
-import { calculateRNP } from "../../index";
+import {calculateRNP} from "../../index";
 
 export default defineComponent({
   name: "RNPbody",
 
-  components: { RNPoutput, RNPbutton },
+  components: {RNPoutput, RNPbutton},
 
   data() {
     return {
       elements: {
-        numbers: [7, 8, 9, 4, 5, 6, 1, 2, 3, 0],
+        numbers: [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, 'space'],
         operators: ["+", "-", "*", "/"],
       },
       output: "",
@@ -55,9 +59,7 @@ export default defineComponent({
       if (e === "C") {
         this.clear();
       } else if (e === "=") {
-        console.log(this.output);
-
-        this.output = calculateRNP(this.dataForCalculate)[0];
+        this.output = calculateRNP(this.dataForCalculate);
       } else {
         this.dataForCalculate.push(e);
       }
@@ -116,14 +118,12 @@ export default defineComponent({
 
 .calcul {
   border-bottom: 2px solid;
-  border-top: 2px solid;
   border-image-slice: 1;
-  border-width: 3px;
   border-image-source: linear-gradient(
-    90deg,
-    rgba(177, 190, 234, 1) 34%,
-    rgba(197, 138, 222, 1) 65%,
-    rgba(136, 105, 165, 1) 100%
+      90deg,
+      rgba(177, 190, 234, 1) 34%,
+      rgba(197, 138, 222, 1) 65%,
+      rgba(136, 105, 165, 1) 100%
   );
   padding: 20px;
   width: 70%;
@@ -133,6 +133,7 @@ export default defineComponent({
   opacity: 0.8;
   font-size: 19px;
 }
+
 .result {
   width: 100%;
   margin-bottom: 5px;
@@ -152,7 +153,10 @@ export default defineComponent({
 
 .result-reset-btn {
   width: 20%;
-  display: row;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
 }
 
 .rnp-body__numbers {

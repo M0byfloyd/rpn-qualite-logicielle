@@ -1,57 +1,61 @@
-const operatorList = ['-','+','*','/'];
+export function calculateRNP(expression: Array<any>) {
+    let operandList: Array<any> = [];
+    const result: Array<any> = [];
 
-export function test() {
-    console.log('Calculator chargé')
-}
-export function calculateRNP(expression:Array<any>) {
-    let cal:Array<any> = [];
-    const result:Array<any> = [];
-    console.log(result);
-    expression.forEach(function (value:number|string) {
-        console.log(cal);
-        if(typeof value === 'number'){
-            if (cal.length > 1) {
-                result.push(cal[0]);
-                cal[0] = cal[1];
-                cal[1] = value;
-            }else {
-                cal.push(value);
+    //Pour chaque élément de l'expression
+    expression.forEach(function (value: number | string) {
+        console.log(typeof  value)
+
+        // Si l'élément est un nombre
+        if (typeof value === 'number') {
+            //Si il ne manque pas d'élément pour un calcul (deux opérandes)
+            if (operandList.length > 1) {
+                result.push(operandList[0]);
+                operandList[0] = operandList[1];
+                operandList[1] = value;
+
             }
-        }
-        else {
-            if (cal.length === 2) {
-                result.push(caculateConvertedExpression(cal[0], cal[1], value));
-                cal = [];
+            // Si c'est le premier on push direct dans le tableau de calcul
+            else {
+                operandList.push(value);
             }
-            else{
+        } else {
+            // Si le calcul a deux opérandes
+            if (operandList.length === 2) {
+                //On calcule avec ces deux opérandes et la valeur (qui est ici l'opérateur)
+                result.push(caculateConvertedExpression(operandList[0], operandList[1], value));
+                operandList = [];
+            } else {
                 result.push(value)
-                cal = [];
+                operandList = [];
             }
         }
     });
-    if (cal.length > 0){
-        result.concat(cal);
+
+    if (operandList.length > 0) {
+        result.concat(operandList);
     }
-    console.log(result);
-    if(result.length > 1){
+    if (result.length > 1) {
         result[0] = calculateRNP(result);
     }
+
     return result[0];
 }
 
-export function caculateConvertedExpression(firstN:number, secondN:number, operator:string ):number {
-    let result = firstN + secondN;
+export function caculateConvertedExpression(firstOperand: number, secondOperand: number, operator: string): number {
+    let result = firstOperand + secondOperand;
+
     switch (operator) {
         case '-': {
-            result = firstN - secondN;
+            result = firstOperand - secondOperand;
             break;
         }
         case '*': {
-            result = firstN * secondN;
+            result = firstOperand * secondOperand;
             break;
         }
         case '/': {
-            result = firstN / secondN;
+            result = firstOperand / secondOperand;
         }
     }
     return result;
