@@ -125,6 +125,31 @@ describe('Batterie de test', function () {
       const expected = 6;
       expect(actual).toEqual(expected)
     });
+
+    it('Test mixt',()=> {
+      //GIVEN
+      const expression = [3, 6, 1, '+', 2, '*', 4, '+', '-'];
+
+      //WHEN
+      const actual = calculateRNP(expression);
+
+      //THEN
+      const expected = -15;
+      expect(actual).toEqual(expected)
+    });
+
+    it('Test impossible to calculate',()=> {
+      //GIVEN
+      const expression = [3, 6, 1, '+', 2, '*', 0, '*', '/'];
+
+      //WHEN
+      const actual = calculateRNP(expression);
+
+      //THEN
+      const expected = "Calculation not possible";
+      expect(actual).toEqual(expected)
+    });
+
   });
 
 })
