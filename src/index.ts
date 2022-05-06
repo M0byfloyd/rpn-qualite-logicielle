@@ -2,14 +2,19 @@ export function calculateRNP(expression: Array<any>) {
     let operandList: Array<any> = [];
     const result: Array<any> = [];
 
+    // Retourne syntax si erreur est trouvé
+    if(verifErrorExpression(expression)){
+        return 'Syntax Error'
+    }
+
     //Pour chaque élément de l'expression
     expression.forEach(function (value: number | string) {
         console.log(typeof  value)
 
         // Si l'élément est un nombre
         if (typeof value === 'number') {
-            //Si il ne manque pas d'élément pour un calcul (deux opérandes)
-            if (operandList.length > 1) {
+            //S'il y a deja 2 éléments à calculer (deux opérandes)
+            if (operandList.length === 2) {
                 result.push(operandList[0]);
                 operandList[0] = operandList[1];
                 operandList[1] = value;
@@ -61,3 +66,16 @@ export function caculateConvertedExpression(firstOperand: number, secondOperand:
     return result;
 }
 
+export function verifErrorExpression(expression: Array<any>){
+    let operator:number = 0;
+    let operand:number = 0;
+    expression.forEach( function (element){
+        if (typeof element === 'number'){
+            operand ++;
+        }
+        else{
+            operator ++;
+        }
+    });
+    return operand != (operator + 1);
+}

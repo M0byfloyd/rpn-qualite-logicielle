@@ -1,6 +1,6 @@
 // @ts-ignore see https://github.com/jest-community/jest-extended#setup
 import * as matchers from "jest-extended";
-import {caculateConvertedExpression, calculateRNP} from "./index";
+import {caculateConvertedExpression, calculateRNP, verifErrorExpression} from "./index";
 expect.extend(matchers);
 
 describe('Batterie de test', function () {
@@ -15,6 +15,42 @@ describe('Batterie de test', function () {
       const expected = 21;
       expect(actual).toEqual(expected)
     });
+  });
+
+  describe('Test verifErrorExpression()',()=> {
+    it('Test without error', () => {
+      //GIVEN
+
+      //WHEN
+      const actual = verifErrorExpression([7 , 3, '*']);
+
+      //THEN
+      const expected = false;
+      expect(actual).toEqual(expected)
+    });
+
+    it('Test with error', () => {
+      //GIVEN
+
+      //WHEN
+      const actual = verifErrorExpression([7 , 3, '*', '*']);
+
+      //THEN
+      const expected = true;
+      expect(actual).toEqual(expected)
+    });
+
+    it('Test with error', () => {
+      //GIVEN
+
+      //WHEN
+      const actual = verifErrorExpression([7 , 3, 7 , 3, '*', '*']);
+
+      //THEN
+      const expected = true;
+      expect(actual).toEqual(expected)
+    });
+
   });
 
   describe('Test calculateRNP()',()=> {
