@@ -47,28 +47,45 @@ export default defineComponent({
   data() {
     return {
       elements: {
-        numbers: [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, 'space'],
-        operators: ["+", "-", "*", "/"],
+        numbers: [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, ' '],
+        operators: ["+", "-", "*", "/"]
       },
+      memoryNumber: '',
       output: "",
       dataForCalculate: [],
     };
   },
   methods: {
-    input(e: string | number) {
-      if (e === "C") {
-        this.clear();
-      } else if (e === "=") {
-        this.output = calculateRNP(this.dataForCalculate);
-      } else {
-        this.dataForCalculate.push(e);
-      }
+    clear() {
+      this.dataForCalculate = '';
+      this.output = "";
+      this.memoryNumber ='';
     },
 
-    clear() {
-      this.dataForCalculate = [];
-      this.output = "";
+    convert (expression: string) {
+      let convertedArray = expression.split(' ');
+      if (convertedArray[convertedArray.length - 1] === '') {
+        convertedArray.pop();
+      }
+
+
+      return convertedArray.map(x => !this.elements.operators.includes(x) ? parseInt(x) : x);
     },
+    input: function (e: string | number) {
+      if (e === 'C') {
+        return this.clear();
+      }
+
+      if (this.elements.operators.includes(e)) {
+        return this.dataForCalculate += ' ' + e + ' ';
+      }
+
+      if (e === '=') {
+        console.log(this.convert(this.dataForCalculate))
+        return this.output = calculateRNP(this.dataForCalculate);
+      }
+      this.dataForCalculate += e;
+    }
   },
 });
 </script>
