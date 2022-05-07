@@ -48,18 +48,16 @@ export default defineComponent({
     return {
       elements: {
         numbers: [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, ' '],
-        operators: ["+", "-", "*", "/"]
+        operators: ['+', '-', '*', '/', 'NEGATE']
       },
-      memoryNumber: '',
-      output: "",
-      dataForCalculate: [],
+      output: '',
+      dataForCalculate: ''
     };
   },
   methods: {
     clear() {
       this.dataForCalculate = '';
-      this.output = "";
-      this.memoryNumber ='';
+      this.output = '';
     },
 
     convert (expression: string) {
@@ -68,23 +66,27 @@ export default defineComponent({
         convertedArray.pop();
       }
 
-
       return convertedArray.map(x => !this.elements.operators.includes(x) ? parseInt(x) : x);
     },
-    input: function (e: string | number) {
-      if (e === 'C') {
+
+    input: function (inputReturnedValue: string | number) {
+      if (inputReturnedValue === 'C') {
         return this.clear();
       }
 
-      if (this.elements.operators.includes(e)) {
-        return this.dataForCalculate += ' ' + e + ' ';
+      if (typeof inputReturnedValue === 'string' && this.elements.operators.includes(inputReturnedValue)) {
+        return this.dataForCalculate += this.operatorConversion(inputReturnedValue);
       }
 
-      if (e === '=') {
-        console.log(this.convert(this.dataForCalculate))
-        return this.output = calculateRNP(this.dataForCalculate);
+      if (inputReturnedValue === '=') {
+        console.log(calculateRNP(this.convert(this.dataForCalculate)));
+        return this.output = calculateRNP(this.convert(this.dataForCalculate));
       }
-      this.dataForCalculate += e;
+      this.dataForCalculate += inputReturnedValue;
+    },
+
+    operatorConversion(value:number|string) {
+      return ' ' + value + ' ';
     }
   },
 });
