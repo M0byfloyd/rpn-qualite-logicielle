@@ -54,6 +54,18 @@ describe('Batterie de test', function () {
   });
 
   describe('Test calculateRNP()',()=> {
+    it('Test negate',()=> {
+      //GIVEN
+      const expression = [1, 'negate'];
+
+      //WHEN
+      const actual = calculateRNP(expression);
+
+      //THEN
+      const expected = 12;
+      expect(actual).toEqual(expected)
+    });
+
     it('Test addition',()=> {
       //GIVEN
       const expression = [10, 2, '+'];
@@ -66,7 +78,7 @@ describe('Batterie de test', function () {
       expect(actual).toEqual(expected)
     });
 
-    it('Test minus',()=> {
+    it('Test addition',()=> {
       //GIVEN
       const expression = [14, 8, '+'];
 
@@ -126,7 +138,7 @@ describe('Batterie de test', function () {
       expect(actual).toEqual(expected)
     });
 
-    it('Test mixt',()=> {
+    it('Test mix',()=> {
       //GIVEN
       const expression = [3, 6, 1, '+', 2, '*', 4, '+', '-'];
 
@@ -146,7 +158,7 @@ describe('Batterie de test', function () {
       const actual = calculateRNP(expression);
 
       //THEN
-      const expected = "Calculation not possible";
+      const expected = "Cannot divide by zero";
       expect(actual).toEqual(expected)
     });
 
