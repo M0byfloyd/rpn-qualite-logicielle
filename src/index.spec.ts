@@ -1,6 +1,6 @@
 // @ts-ignore see https://github.com/jest-community/jest-extended#setup
 import * as matchers from "jest-extended";
-import {caculateConvertedExpression, calculateRNP, verifErrorExpression} from "./index";
+import {caculateConvertedExpression, calculateRNP, verifErrorExpression, checkNegate} from "./index";
 
 expect.extend(matchers);
 
@@ -53,22 +53,33 @@ describe('Batterie de test', function () {
         });
 
     });
-    describe('Test convertOperator()', () => {
+    describe('Test checkNegate()', () => {
+        it('Test', () => {
+            //GIVEN
+            const expression = [1, 'negate'];
+
+            //WHEN
+            const actual = checkNegate(expression);
+
+            //THEN
+            const expected = [-1];
+            expect(actual).toEqual(expected)
+        });
 
     })
 
-        describe('Test calculateRNP()', () => {
+    describe('Test calculateRNP()', () => {
         describe('Basic operation', () => {
             it('Test negate', () => {
                 //GIVEN
-                const expression = [1, 'negate'];
+                const expression = [1, 6, 'negate', '+'];
 
                 //WHEN
                 const actual = calculateRNP(expression);
 
                 //THEN
-                const expected = 12;
-                // expect(actual).toEqual(expected)
+                const expected = -5;
+                expect(actual).toEqual(expected)
             });
 
             it('Test addition', () => {
@@ -80,18 +91,6 @@ describe('Batterie de test', function () {
 
                 //THEN
                 const expected = 12;
-                expect(actual).toEqual(expected)
-            });
-
-            it('Test addition', () => {
-                //GIVEN
-                const expression = [14, 8, '+'];
-
-                //WHEN
-                const actual = calculateRNP(expression);
-
-                //THEN
-                const expected = 22;
                 expect(actual).toEqual(expected)
             });
 

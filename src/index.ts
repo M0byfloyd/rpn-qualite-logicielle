@@ -6,7 +6,7 @@ export function calculateRNP(expression: Array<any>): string {
 
     expression = checkNegate(expression);
 
-    if(verifErrorExpression(expression)){
+    if(error || verifErrorExpression(expression)){
         return 'Syntax Error'
     }
 
@@ -34,7 +34,7 @@ export function calculateRNP(expression: Array<any>): string {
         }
     });
 
-    if (result.length > 1) {
+    if (!error && result.length > 1) {
         return calculateRNP(result);
     }
 
@@ -76,5 +76,16 @@ export function verifErrorExpression(expression: Array<any>) {
 
 export function checkNegate(expressionToCheck: Array<number | string>) {
     // Negate
+    expressionToCheck.forEach(function(item, index) {
+        if (item === 'negate'){
+            if (typeof expressionToCheck[index - 1] === 'number'){
+                expressionToCheck.splice(index - 1, 2, -expressionToCheck[index - 1]);
+            }
+            else {
+                error = true;
+                return [];
+            }
+        }
+    });
     return expressionToCheck;
 }
