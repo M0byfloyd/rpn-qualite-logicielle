@@ -18,7 +18,7 @@
     </div>
 
     <div class="rnp-body__numbers">
-      <RNPbutton class="" @input="input" v-for="(element, index) in elements.numbers" :key="index" :value="element"/>
+      <RNPbutton @input="input" v-for="(element, index) in elements.numbers" :key="index" :value="element"/>
     </div>
 
     <div class="rnp-body__operator">

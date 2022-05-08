@@ -6,7 +6,7 @@ export function calculateRNP(expression: Array<any>): string {
 
     expression = checkNegate(expression);
 
-    if(verifErrorExpression(expression)){
+    if (verifErrorExpression(expression)) {
         return 'Syntax Error'
     }
 
@@ -16,9 +16,7 @@ export function calculateRNP(expression: Array<any>): string {
                 result.push(operandList[0]);
                 operandList[0] = operandList[1];
                 operandList[1] = value;
-
-            }
-            else {
+            } else {
                 operandList.push(value);
             }
         } else {
@@ -26,7 +24,7 @@ export function calculateRNP(expression: Array<any>): string {
                 try {
                     result.push(caculateConvertedExpression(operandList[0], operandList[1], value));
                     operandList = [];
-                } catch (errorMessage:any) {
+                } catch (errorMessage: any) {
                     error = errorMessage;
                 }
             } else {
@@ -44,41 +42,36 @@ export function calculateRNP(expression: Array<any>): string {
 }
 
 export function caculateConvertedExpression(firstOperand: number, secondOperand: number, operator: string): number {
-    let result = firstOperand + secondOperand;
-
     if (secondOperand === 0 && operator === "/") {
         throw 'Cannot divide by zero';
     }
 
-    switch (operator) {
-        case '-': {
-            result = firstOperand - secondOperand;
-            break;
-        }
-        case '*': {
-            result = firstOperand * secondOperand;
-            break;
-        }
-        case '/': {
-            result = firstOperand / secondOperand;
-        }
-    }
-
-    return result;
+    return calculateByOperator[operator](firstOperand, secondOperand);
 }
 
 export function verifErrorExpression(expression: Array<any>) {
     let operator: number = 0;
     let operand: number = 0;
     expression.forEach(function (element) {
-        if (typeof element === 'number') {
-            operand++;
-        } else {
-            operator++;
-        }
+        typeof element === 'number' ? operand++ : operator++;
     });
     return operand != (operator + 1);
 }
+
+export const calculateByOperator = {
+    '+': function (x: number, y: number) {
+        return x + y
+    },
+    '-': function (x: number, y: number) {
+        return x - y
+    },
+    '*': function (x: number, y: number) {
+        return x * y
+    },
+    '/': function (x: number, y: number) {
+        return x / y
+    }
+};
 
 export function checkNegate(expressionToCheck: Array<number | string>) {
     // Negate
