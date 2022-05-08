@@ -23,6 +23,7 @@ export default {
 <style>
 .rnp-button {
   width: 64px;
+  min-width: max-content;
   height: 64px;
   border-radius: 15px;
   background: #b1beea;
@@ -43,7 +44,7 @@ export default {
   opacity: 1;
   transition: all 0.4s;
 }
-.rnp-button__operators {
+.rnp-button__operator {
   background: #8095ce;
   color: black;
   margin-left: 0;
